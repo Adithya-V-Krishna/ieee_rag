@@ -1,4 +1,5 @@
 # type: ignore
+import os
 from langchain_google_genai import GoogleGenerativeAIEmbeddings, ChatGoogleGenerativeAI
 from langchain_chroma import Chroma
 import gradio as gr
@@ -7,17 +8,22 @@ import gradio as gr
 DATA_PATH = r"data"
 CHROMA_PATH = r"chroma_db"
 
+from dotenv import load_dotenv
+load_dotenv()
+
+api_key = os.getenv("GEMINI_API_KEY")
+
 # Replace OpenAI embeddings with Google embeddings
 embeddings_model = GoogleGenerativeAIEmbeddings(
     model="models/embedding-001",
-    google_api_key="AIzaSyC8IFp63pzkewOiqOOMDRbtYjg-P3pJP4w"  # Replace with your API key
+    google_api_key=api_key  
 )
 
 # Replace ChatOpenAI with ChatGoogleGenerativeAI
 llm = ChatGoogleGenerativeAI(
     model="gemini-2.0-flash",
     temperature=0.5,
-    google_api_key="AIzaSyC8IFp63pzkewOiqOOMDRbtYjg-P3pJP4w"
+    google_api_key=api_key
 )
 
 # connect to the chromadb

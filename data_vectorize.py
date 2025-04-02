@@ -1,4 +1,5 @@
 # type: ignore
+import os
 from langchain_community.document_loaders import PyPDFDirectoryLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from uuid import uuid4
@@ -9,10 +10,15 @@ from langchain_google_genai import GoogleGenerativeAIEmbeddings
 DATA_PATH = r"data"
 CHROMA_PATH = r"chroma_db"
 
+from dotenv import load_dotenv
+load_dotenv()
+
+api_key = os.getenv("GEMINI_API_KEY")
+
 # initiate the embeddings model using the LangChain wrapper
 embeddings_model = GoogleGenerativeAIEmbeddings(
     model="models/embedding-001",
-    google_api_key="AIzaSyC8IFp63pzkewOiqOOMDRbtYjg-P3pJP4w"  # Replace with your API key
+    google_api_key=api_key  # Replace with your API key
 )
 
 # initiate the vector store
